@@ -15,19 +15,16 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 export class AuthCallbackViewComponent {
   private platformId = inject(PLATFORM_ID);
   private router = inject(Router);
-  authService?: AuthService;
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
-      this.authService = inject(AuthService);
-      this.authService.isAuthenticated$
-        .pipe(filter((authenticated) => authenticated))
-        .subscribe(() => {
-          const location = localStorage.getItem("location");
-          if (location) this.router.navigateByUrl(location);
-          else this.router.navigateByUrl("/");
-          localStorage.removeItem("location");
-        });
+      const authService = inject(AuthService);
+      authService.isAuthenticated$.pipe(filter((authenticated) => authenticated)).subscribe(() => {
+        const location = localStorage.getItem("location");
+        if (location) this.router.navigateByUrl(location);
+        else this.router.navigateByUrl("/");
+        localStorage.removeItem("location");
+      });
     }
   }
 }
