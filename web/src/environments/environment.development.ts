@@ -24,5 +24,6 @@ export const environment: Environment = {
         }
       ]
     }
-  }
+  },
+  api: "http://localhost:8080"
 };

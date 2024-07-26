@@ -8,5 +8,6 @@ export const environment: Environment = {
     authorizationParams: {
       redirect_uri: ""
     }
-  }
+  },
+  api: ""
 };
