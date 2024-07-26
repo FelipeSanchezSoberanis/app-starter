@@ -1,8 +1,8 @@
 package com.felipe.starter.controllers;
 
-import java.util.HashMap;
-import java.util.Map;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,9 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
   @GetMapping("/me")
-  public ResponseEntity<Map<String, String>> getLoggedInUserDetails() {
-    Map<String, String> userDetails = new HashMap<>();
-    userDetails.put("email", "email");
-    return ResponseEntity.ok(userDetails);
+  public ResponseEntity<Jwt> getLoggedInUserDetails(@AuthenticationPrincipal Jwt jwt) {
+    return ResponseEntity.ok(jwt);
   }
 }
