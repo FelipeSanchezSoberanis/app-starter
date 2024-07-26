@@ -1,5 +1,6 @@
 package com.felipe.starter.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -12,6 +13,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 @EnableMethodSecurity
 public class SecurityConfig {
+  @Value("${custom.web-domain}")
+  private String webDomain;
+
   @Bean
   public SecurityFilterChain configure(HttpSecurity http) throws Exception {
     return http.authorizeHttpRequests((authorize) -> authorize.anyRequest().authenticated())
@@ -25,7 +29,7 @@ public class SecurityConfig {
     return new WebMvcConfigurer() {
       @Override
       public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins("http://localhost:4200");
+        registry.addMapping("/**").allowedOrigins(webDomain);
       }
     };
   }
