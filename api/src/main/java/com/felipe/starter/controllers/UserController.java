@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/users")
 public class UserController {
   @GetMapping("/me")
-  @PreAuthorize("hasAuthority('SCOPE_read:current_user')")
+  @PreAuthorize("hasAuthority('read:permissions_claim')")
   public ResponseEntity<UserDetailsResponse> getLoggedInUserDetails(
       @AuthenticationPrincipal Jwt jwt) {
     return ResponseEntity.ok(
