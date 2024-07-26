@@ -1,6 +1,6 @@
 import { isPlatformBrowser } from "@angular/common";
 import { Component, inject, PLATFORM_ID } from "@angular/core";
-import { RouterOutlet } from "@angular/router";
+import { Router, RouterOutlet } from "@angular/router";
 import { AuthService } from "@auth0/auth0-angular";
 import { filter, switchMap } from "rxjs";
 import { ApiService } from "./services/api.service";
@@ -15,6 +15,7 @@ import { ApiService } from "./services/api.service";
 export class AppComponent {
   private platformId = inject(PLATFORM_ID);
   private apiService = inject(ApiService);
+  private router = inject(Router);
 
   constructor() {
     if (isPlatformBrowser(this.platformId)) {
@@ -24,7 +25,12 @@ export class AppComponent {
           filter((idTokenClaims) => idTokenClaims !== undefined && idTokenClaims !== null),
           switchMap(() => this.apiService.getLoggedInUserDetails())
         )
-        .subscribe((userDetails) => console.log({ userDetails }));
+        .subscribe((userDetails) => {
+          console.log({ userDetails });
+          const location = localStorage.getItem("location");
+          if (location) this.router.navigateByUrl(location);
+          localStorage.removeItem("location");
+        });
     }
   }
 }
