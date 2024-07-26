@@ -1,0 +1,17 @@
+spring:
+  application:
+    name:
+  datasource:
+    url:
+    username:
+    password:
+  jpa:
+    show-sql:
+    hibernate:
+      ddl-auto:
+okta:
+  oauth2:
+    issuer:
+    audience:
+custom:
+  web-domain:
